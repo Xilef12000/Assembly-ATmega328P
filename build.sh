@@ -21,12 +21,24 @@ if [ "$2" ]
 then
 	dev=$2
 fi
+echo "\e[1;35mcompiling... \e[0m"
 avra $asm
+if [ $? != 0 ]
+then
+	echo "\e[1;31mAborted! \e[0m"
+	exit
+fi
 hex=`echo $asm | sed -e "s/.asm/.hex/g"`
+echo "\e[1;35muploading... \e[0m"
 sudo avrdude -p atmega328p -c arduino -P $dev -U flash:w:$hex:i
-
+if [ $? != 0 ]
+then
+	echo "\e[1;31mAborted! \e[0m"
+	exit
+fi
 # cleanup:
-echo "cleanup..."
+echo "\e[1;35mcleaning... \e[0m"
 rm *.cof
 rm *.hex
 rm *.obj
+echo "\e[1;32mFinished \e[0m"
