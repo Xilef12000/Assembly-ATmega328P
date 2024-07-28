@@ -4,8 +4,9 @@
 .include "../m328Pdef.inc"
 
 	ldi r16, 0b00100000
-	out DDRB, r16
-	ldi r16, 0b00100000
-	out PortB, r16
+
+	out DDRB, r16 ; sets 5th bit to output
+
+	out PortB, r16 ; sets 5th bit high
 Start:
 	rjmp Start
